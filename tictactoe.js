@@ -79,7 +79,7 @@ function insMove(button) {
     return
   }
   turn = false
-  compMove()
+  setTimeout(compMove, 2000)
 }
 
 function visInsMove(button) {
