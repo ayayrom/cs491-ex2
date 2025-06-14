@@ -19,6 +19,10 @@ let msg = document.getElementById("winMsg")
 
 startGame()
 
+
+/**
+ * Initializes the tic-tac-toe board
+ */
 function startGame() {
   for (i = 0; i < 9; i++) {
     const button = document.createElement("button")
@@ -45,6 +49,10 @@ function startGame() {
   }
 }
 
+/**
+ * Helper function to reduce redundancy when applying tooltip format
+ * @param {HTMLElement} tooltip
+ */
 function applyFormat(tooltip) {
   tooltip.innerText = "x"
   tooltip.style.position = "absolute"
@@ -59,21 +67,28 @@ function applyFormat(tooltip) {
   tooltip.style.userSelect = "none"
 }
 
+/**
+ * Helper function for viz
+ */
 function showTooltip() {
   this.querySelector("div").style.visibility = "visible"
 }
 
+/**
+ * Helper function for viz
+ */
 function hideTooltip() {
   this.querySelector("div").style.visibility = "hidden"
 }
 
+/**
+ * Inserts move from user and then calls on the computer to play a move
+ * @param {HTMLElement} button 
+ * @returns nothing except a early win
+ */
 function insMove(button) {
   const index = parseInt(button.id.slice(-1))
   board[index] = "x"
-  // tooltip.innerText = "o" // example: change the hover letter
-  // tooltip.style.paddingLeft = "7px"
-  // tooltip.style.lineHeight = "0px"
-  // tooltip.style.marginTop = "0px"
   visInsMove(button)
   if (checkGame()) {
     return
@@ -82,6 +97,10 @@ function insMove(button) {
   setTimeout(compMove, 300)
 }
 
+/**
+ * Visual changes for user moves
+ * @param {HTMLElement} button 
+ */
 function visInsMove(button) {
   // to separate visual changes
   const tooltip = button.querySelector("div")
@@ -91,6 +110,10 @@ function visInsMove(button) {
   button.disabled = "true"
 }
 
+/**
+ * Game button is the Start/Reset button that resets the state of all tooltips, turns, board, etc.
+ * The start button forces the user to make their first turn
+ */
 function gameButton() {
   const buttons = grid.querySelectorAll("button")
   if (gameBtn.innerText[0] === "S") {
@@ -120,6 +143,10 @@ function gameButton() {
   }
 }
 
+/**
+ * Checks to see if the game is concluded
+ * @returns true if game is finished
+ */
 function checkGame() {
   for (i = 0; i < winPos.length; i++) {
     const [a, b, c] = winPos[i]
@@ -142,6 +169,9 @@ function checkGame() {
   return false
 }
 
+/**
+ * Ends the game by disabling all buttons once the game is finished
+ */
 function endGame() {
   const buttons = grid.querySelectorAll("button")
   for (i = 0; i < buttons.length; i++) {
@@ -151,6 +181,12 @@ function endGame() {
   }
 }
 
+/**
+ * Helper function for compMove, checks to see if there is a winning move yet
+ * @param {string} player 
+ * @param {number} i 
+ * @returns true if there is a winning move
+ */
 function canWin(player, i) {
   board[i] = player
   const won = winPos.some((line) => line.every((j) => board[j] === player))
@@ -158,6 +194,10 @@ function canWin(player, i) {
   return won
 }
 
+/**
+ * Helper function for compMove, visual changes specific to compMove as it is not centered properly with font
+ * @param {number} i 
+ */
 function doMove(i) {
   // viz changes
   const btn = document.getElementById("tic" + i)
@@ -172,6 +212,10 @@ function doMove(i) {
   btn.removeEventListener("mouseout", hideTooltip)
 }
 
+/**
+ * Computer plays the game
+ * @returns if there is a winning/blocking move
+ */
 function compMove() {
   for (let i = 0; i < board.length; i++) {
     if (board[i] === null && canWin("O", i)) {
