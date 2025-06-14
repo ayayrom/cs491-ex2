@@ -1,0 +1,25 @@
+* {
+  font-family: sans-serif;
+}
+
+*.unselectable {
+  user-select: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#grid-container {
+  display: flex;
+  gap: 20px; /* Space between grid and reset button */
+  align-items: center;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 60px 60px 60px;
+  gap: 5px;
+}
